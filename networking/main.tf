@@ -1,4 +1,7 @@
 #-- networking/main.tf ---
+
+data "aws_region" "current" {}
+
 data "aws_availability_zones" "available" {}
 
 #--- VPC 1 - Service Provider
@@ -8,7 +11,7 @@ resource "aws_vpc" "vpc1" {
   enable_dns_hostnames = true
   enable_dns_support   = true
   tags = { 
-    name = format("%s_vpc1", var.project_name)
+    Name = format("%s_vpc1", var.project_name)
     project_name = var.project_name
   }
 }
@@ -17,7 +20,7 @@ resource "aws_internet_gateway" "igw1" {
   vpc_id = aws_vpc.vpc1.id
 
   tags = { 
-    name = format("%s_igw1", var.project_name)
+    Name = format("%s_igw1", var.project_name)
     project_name = var.project_name
   }
 }
@@ -29,7 +32,7 @@ resource "aws_subnet" "subpub1" {
   availability_zone       = data.aws_availability_zones.available.names[0]
   
   tags = { 
-    name = format("%s_subpub1", var.project_name)
+    Name = format("%s_subpub1", var.project_name)
     project_name = var.project_name
   }
 }
@@ -43,7 +46,7 @@ resource "aws_route_table" "rtpub1" {
     gateway_id = aws_internet_gateway.igw1.id
   }
   tags = {
-    name = format("%s_rtpub1", var.project_name)
+    Name = format("%s_rtpub1", var.project_name)
     project_name = var.project_name
   }
 }
@@ -93,7 +96,7 @@ resource "aws_security_group" "sgpub1" {
   }
 
   tags = { 
-    name = format("%s_sgpub1", var.project_name)
+    Name = format("%s_sgpub1", var.project_name)
     project_name = var.project_name
   }
 }
@@ -106,7 +109,7 @@ resource "aws_vpc" "vpc2" {
   enable_dns_hostnames = true
   enable_dns_support   = true
   tags = { 
-    name = format("%s_vpc2", var.project_name)
+    Name = format("%s_vpc2", var.project_name)
     project_name = var.project_name
   }
 }
@@ -115,7 +118,7 @@ resource "aws_internet_gateway" "igw2" {
   vpc_id = aws_vpc.vpc2.id
 
   tags = { 
-    name = format("%s_igw2", var.project_name)
+    Name = format("%s_igw2", var.project_name)
     project_name = var.project_name
   }
 }
@@ -127,7 +130,7 @@ resource "aws_subnet" "subpub2" {
   availability_zone       = data.aws_availability_zones.available.names[0]
   
   tags = { 
-    name = format("%s_subpub2", var.project_name)
+    Name = format("%s_subpub2", var.project_name)
     project_name = var.project_name
   }
 }
@@ -141,7 +144,7 @@ resource "aws_route_table" "rtpub2" {
     gateway_id = aws_internet_gateway.igw2.id
   }
   tags = {
-    name = format("%s_rtpub2", var.project_name)
+    Name = format("%s_rtpub2", var.project_name)
     project_name = var.project_name
   }
 }
@@ -191,7 +194,7 @@ resource "aws_security_group" "sgpub2" {
   }
 
   tags = { 
-    name = format("%s_sgpub2", var.project_name)
+    Name = format("%s_sgpub2", var.project_name)
     project_name = var.project_name
   }
 }
