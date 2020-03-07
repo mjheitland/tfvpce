@@ -1,7 +1,7 @@
 This Terraform project shows how to specify and deploy the following components:
-+ 1 keypair (first you have to run ssh-keygen in your home folder)
-+ 2 VPCs (each one with 1 internet gateway, 1 public subnet, 1 public security group allowing ssh, ping and icmp, 1 public route table with its main route table association and 1 ec2 instance)
-+ 1 transit gateway with two transit gateway attachments (which connect a vpc subnet with the transit gateway)
++ 1 keypair (run ssh-keygen in your home folder to create a key "~/.ssh/tfvpce/id_rsa.pub")
++ 1 service provider VPC with 1 ec2
++ 1 service consumer VPC with 1 ec2
 
 ## generate a keypair to access EC2 instances
 
