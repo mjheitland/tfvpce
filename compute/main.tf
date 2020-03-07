@@ -28,7 +28,7 @@ resource "aws_instance" "server1" {
   vpc_security_group_ids  = [var.sgpub1_id]
   user_data               = data.template_file.userdata1.*.rendered[0]
   tags = { 
-    name = format("%s_server1", var.project_name)
+    Name = format("%s_server1", var.project_name)
     project_name = var.project_name
   }
 }
@@ -49,7 +49,7 @@ resource "aws_instance" "server2" {
   vpc_security_group_ids  = [var.sgpub2_id]
   user_data               = data.template_file.userdata2.*.rendered[0]
   tags = { 
-    name = format("%s_server2", var.project_name)
+    Name = format("%s_server2", var.project_name)
     project_name = var.project_name
   }
 }

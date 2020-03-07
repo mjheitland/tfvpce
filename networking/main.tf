@@ -11,7 +11,7 @@ resource "aws_vpc" "vpc1" {
   enable_dns_hostnames = true
   enable_dns_support   = true
   tags = { 
-    Name = format("%s_vpc1", var.project_name)
+    Name = format("%s_vpc1_provider", var.project_name)
     project_name = var.project_name
   }
 }
@@ -109,7 +109,7 @@ resource "aws_vpc" "vpc2" {
   enable_dns_hostnames = true
   enable_dns_support   = true
   tags = { 
-    Name = format("%s_vpc2", var.project_name)
+    Name = format("%s_vpc2_consumer", var.project_name)
     project_name = var.project_name
   }
 }
