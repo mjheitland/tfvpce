@@ -4,14 +4,15 @@ resource "aws_key_pair" "keypair" {
   public_key = file(var.public_key_path)
 }
 
-data "aws_ami" "server_ami" {
+data "aws_ami" "amazon-linux-2" {
   most_recent = true
   owners = ["amazon"]
+
   filter {
     name   = "name"
-    values = ["amzn-ami-hvm*-x86_64-gp2"]
+    values = ["amzn2-ami-hvm-*-x86_64-ebs"]
   }
-}
+}  
 
 #--- Server 1
 data "template_file" "userdata1" {
@@ -20,9 +21,10 @@ data "template_file" "userdata1" {
     server_number = "1"
   }
 }
+
 resource "aws_instance" "server1" {
-  instance_type           = "t2.micro"
-  ami                     = data.aws_ami.server_ami.id
+  instance_type           = "t3.micro"
+  ami                     = data.aws_ami.amazon-linux-2.id
   key_name                = aws_key_pair.keypair.id
   subnet_id               = var.subpub1_id
   vpc_security_group_ids  = [var.sgpub1_id]
@@ -42,8 +44,8 @@ data "template_file" "userdata2" {
   }
 }
 resource "aws_instance" "server2" {
-  instance_type           = "t2.micro"
-  ami                     = data.aws_ami.server_ami.id
+  instance_type           = "t3.micro"
+  ami                     = data.aws_ami.amazon-linux-2.id
   key_name                = aws_key_pair.keypair.id
   subnet_id               = var.subpub2_id
   vpc_security_group_ids  = [var.sgpub2_id]
