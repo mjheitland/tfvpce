@@ -24,3 +24,5 @@ This Terraform project shows how to specify and deploy the following components:
 ## To delete Terraform state files
     rm -rfv **/.terraform # remove all recursive subdirectories
     
+![Alt text](https://./VPC Endpoint Service.svg?sanitize=true)
+<img src="https://./VPC Endpoint Service.svg?sanitize=true">
