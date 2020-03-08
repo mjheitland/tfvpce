@@ -5,7 +5,7 @@ This Terraform project shows how to specify and deploy the following components:
 + 1 service provider VPC with 1 ec2
 + 1 service consumer VPC with 1 ec2
 
-## generate a keypair to access EC2 instances
+## Generate a keypair to access EC2 instances
 
     ssh-keygen
 
