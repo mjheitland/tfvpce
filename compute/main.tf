@@ -57,33 +57,56 @@ resource "aws_instance" "server2" {
 }
 
 #--- Network Load Balancer
-resource "aws_lb" "nlb-provider" {
-  name               = "nlb-provider"
+
+resource "aws_lb" "nlb" {
+  name               = "nlb"
   load_balancer_type = "network"
   internal           = true
   subnets            = [var.subprv1_id]
 # enable_deletion_protection = true
   tags = { 
-    Name = format("%s_nlb-provider", var.project_name)
+    Name = format("%s_nlb", var.project_name)
     project_name = var.project_name
   }
 }
 
-resource "aws_lb_target_group" "nlbtrg-provider" {
-  name                  = "nlbtrg-provider"
+resource "aws_lb_listener" "listener" {
+  load_balancer_arn = aws_lb.nlb.arn
+  port              = 80
+  protocol          = "TCP"
+  default_action {
+    target_group_arn = aws_lb_target_group.nlbtrggroup.arn
+    type             = "forward"
+  }
+}
+
+resource "aws_lb_target_group" "nlbtrggroup" {
+  name                  = "nlbtrggroup"
   port                  = 80
-  protocol              = "HTTP"
+  protocol              = "TCP"
   target_type           = "instance"
-  deregistration_delay  = 300
+  deregistration_delay  = 90
   proxy_protocol_v2     = false
   vpc_id                = var.vpc1_id
+  health_check {
+    port = 80
+    protocol = "TCP"
+    interval = "10"
+    healthy_threshold   = 2
+    unhealthy_threshold = 2
+  }
   lifecycle {
     create_before_destroy = true
     ignore_changes        = [name]
   }
   tags = { 
-    Name = format("%s_nlbtrg-provider", var.project_name)
+    Name = format("%s_nlbtrggroup", var.project_name)
     project_name = var.project_name
   }
 }
 
+resource "aws_lb_target_group_attachment" "nlbtrggroupatt" {
+  target_group_arn  = aws_lb_target_group.nlbtrggroup.arn
+  port              = 80
+  target_id         = aws_instance.server1.id
+}

@@ -34,3 +34,5 @@ This Terraform project shows how to specify and deploy the following components:
 <a href="https://docs.aws.amazon.com/vpc/latest/userguide/endpoint-service.html">VPC Endpoint Services (Private Link)</a>
 <br>
 <a href="https://cloudaffaire.com/create-a-vpc-endpoint-service/">Create a VPC Endpoint Service</a>
+<br>
+<a href="https://medium.com/@sahityamaruvada/setting-up-aws-network-load-balancer-with-terraform-0-12-b87e75992949">Setting up AWS Network Load Balancer with Terraform 0.12</a>
