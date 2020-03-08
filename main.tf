@@ -18,9 +18,11 @@ module "compute" {
   key_name        = var.key_name
   public_key_path = var.public_key_path
 
+  vpc1_id         = module.networking.vpc1_id
+  subprv1_id      = module.networking.subprv1_id
+  sgprv1_id       = module.networking.sgprv1_id
+  
+  vpc2_id         = module.networking.vpc2_id
   subpub1_id      = module.networking.subpub1_id
   sgpub1_id       = module.networking.sgpub1_id
-  
-  subpub2_id     = module.networking.subpub2_id
-  sgpub2_id       = module.networking.sgpub2_id
 }

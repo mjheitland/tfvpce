@@ -16,37 +16,24 @@ resource "aws_vpc" "vpc1" {
   }
 }
 
-resource "aws_internet_gateway" "igw1" {
-  vpc_id = aws_vpc.vpc1.id
-
-  tags = { 
-    Name = format("%s_igw1", var.project_name)
-    project_name = var.project_name
-  }
-}
-
-resource "aws_subnet" "subpub1" {
+resource "aws_subnet" "subprv1" {
   vpc_id                  = aws_vpc.vpc1.id
   cidr_block              = "10.1.1.0/24"
   map_public_ip_on_launch = true
   availability_zone       = data.aws_availability_zones.available.names[0]
   
   tags = { 
-    Name = format("%s_subpub1", var.project_name)
+    Name = format("%s_subprv1", var.project_name)
     project_name = var.project_name
   }
 }
 
 # Public route table, allows all outgoing traffic to go the the internet gateway.
 # https://www.terraform.io/docs/providers/aws/r/route_table.html?source=post_page-----1a7fb9a336e9----------------------
-resource "aws_route_table" "rtpub1" {
+resource "aws_route_table" "rtprv1" {
   vpc_id = aws_vpc.vpc1.id
-  route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.igw1.id
-  }
   tags = {
-    Name = format("%s_rtpub1", var.project_name)
+    Name = format("%s_rtprv1", var.project_name)
     project_name = var.project_name
   }
 }
@@ -55,13 +42,13 @@ resource "aws_route_table" "rtpub1" {
 # ## Forcing our Route Tables to be the main ones for our VPCs,
 # ## otherwise AWS automatically will create a main Route Table
 # ## for each VPC, leaving our own Route Tables as secondary
-resource "aws_main_route_table_association" "rtpub1assoc" {
+resource "aws_main_route_table_association" "rtprv1assoc" {
   vpc_id         = aws_vpc.vpc1.id
-  route_table_id = aws_route_table.rtpub1.id
+  route_table_id = aws_route_table.rtprv1.id
 }
 
-resource "aws_security_group" "sgpub1" {
-  name        = "sgpub1"
+resource "aws_security_group" "sgprv1" {
+  name        = "sgprv1"
   description = "Used for access to the public instances"
   vpc_id      = aws_vpc.vpc1.id
   ingress { # allow ping
@@ -96,7 +83,7 @@ resource "aws_security_group" "sgpub1" {
   }
 
   tags = { 
-    Name = format("%s_sgpub1", var.project_name)
+    Name = format("%s_sgprv1", var.project_name)
     project_name = var.project_name
   }
 }
@@ -123,28 +110,28 @@ resource "aws_internet_gateway" "igw2" {
   }
 }
 
-resource "aws_subnet" "subpub2" {
+resource "aws_subnet" "subpub1" {
   vpc_id                  = aws_vpc.vpc2.id
   cidr_block              = "10.2.1.0/24"
   map_public_ip_on_launch = true
   availability_zone       = data.aws_availability_zones.available.names[0]
   
   tags = { 
-    Name = format("%s_subpub2", var.project_name)
+    Name = format("%s_subpub1", var.project_name)
     project_name = var.project_name
   }
 }
 
 # Public route table, allows all outgoing traffic to go the the internet gateway.
 # https://www.terraform.io/docs/providers/aws/r/route_table.html?source=post_page-----1a7fb9a336e9----------------------
-resource "aws_route_table" "rtpub2" {
+resource "aws_route_table" "rtpub1" {
   vpc_id = aws_vpc.vpc2.id
   route {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.igw2.id
   }
   tags = {
-    Name = format("%s_rtpub2", var.project_name)
+    Name = format("%s_rtpub1", var.project_name)
     project_name = var.project_name
   }
 }
@@ -153,13 +140,13 @@ resource "aws_route_table" "rtpub2" {
 ## Forcing our Route Tables to be the main ones for our VPCs,
 ## otherwise AWS automatically will create a main Route Table
 ## for each VPC, leaving our own Route Tables as secondary
-resource "aws_main_route_table_association" "rtpub2assoc" {
+resource "aws_main_route_table_association" "rtpub1assoc" {
   vpc_id         = aws_vpc.vpc2.id
-  route_table_id = aws_route_table.rtpub2.id
+  route_table_id = aws_route_table.rtpub1.id
 }
 
-resource "aws_security_group" "sgpub2" {
-  name        = "sgpub2"
+resource "aws_security_group" "sgpub1" {
+  name        = "sgpub1"
   description = "Used for access to the public instances"
   vpc_id      = aws_vpc.vpc2.id
   ingress { # allow ping
@@ -194,7 +181,7 @@ resource "aws_security_group" "sgpub2" {
   }
 
   tags = { 
-    Name = format("%s_sgpub2", var.project_name)
+    Name = format("%s_sgpub1", var.project_name)
     project_name = var.project_name
   }
 }

@@ -7,8 +7,23 @@ output "project_name" {
 output "vpc1_id" {
   value = module.networking.vpc1_id
 }
-output "igw1_id" {
-  value = module.networking.igw1_id
+output "subprv1_id" {
+  value = module.networking.subprv1_id
+}
+output "sgprv1_id" {
+  value = module.networking.sgprv1_id
+}
+output "rtprv1_id" {
+  value = module.networking.rtprv1_id
+}
+output "rtprv1assoc_id" {
+  value = module.networking.rtprv1assoc_id
+}
+output "vpc2_id" {
+  value = module.networking.vpc2_id
+}
+output "igw2_id" {
+  value = module.networking.igw2_id
 }
 output "subpub1_id" {
   value = module.networking.subpub1_id
@@ -21,24 +36,6 @@ output "rtpub1_id" {
 }
 output "rtpub1assoc_id" {
   value = module.networking.rtpub1assoc_id
-}
-output "vpc2_id" {
-  value = module.networking.vpc2_id
-}
-output "igw2_id" {
-  value = module.networking.igw2_id
-}
-output "subpub2_id" {
-  value = module.networking.subpub2_id
-}
-output "sgpub2_id" {
-  value = module.networking.sgpub2_id
-}
-output "rtpub2_id" {
-  value = module.networking.rtpub2_id
-}
-output "rtpub2assoc_id" {
-  value = module.networking.rtpub2assoc_id
 }
 
 #--- compute
