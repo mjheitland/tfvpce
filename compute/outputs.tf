@@ -2,11 +2,11 @@
 output "keypair_id" {
   value = "${join(", ", aws_key_pair.keypair.*.id)}"
 }
-output "provider_ids" {
-  value = "${join(", ", aws_instance.provider.*.id)}"
+output "provider1_ids" {
+  value = "${join(", ", aws_instance.provider1.*.id)}"
 }
-output "provider_public_ips" {
-  value = "${join(", ", aws_instance.provider.*.public_ip)}"
+output "provider2_ids" {
+  value = "${join(", ", aws_instance.provider2.*.id)}"
 }
 output "consumer_ids" {
   value = "${join(", ", aws_instance.consumer.*.id)}"

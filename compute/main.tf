@@ -15,29 +15,49 @@ data "aws_ami" "amazon-linux-2" {
 }  
 
 #--- Server Provider 1
-data "template_file" "userdata1" {
+data "template_file" "userdata_provider1" {
   template = file("${path.module}/userdata.tpl")
   vars = {
-    server_name = "provider"
+    server_name = "provider1"
   }
 }
 
-resource "aws_instance" "provider" {
+resource "aws_instance" "provider1" {
   instance_type           = "t3.micro"
   ami                     = data.aws_ami.amazon-linux-2.id
   key_name                = aws_key_pair.keypair.id
   subnet_id               = var.subprv1_id
   vpc_security_group_ids  = [var.sgprv1_id]
-  user_data               = data.template_file.userdata1.*.rendered[0]
+  user_data               = data.template_file.userdata_provider1.*.rendered[0]
   tags = { 
-    Name = format("%s_provider", var.project_name)
+    Name = format("%s_provider1", var.project_name)
     project_name = var.project_name
   }
 }
 
+#--- Server Provider 1
+data "template_file" "userdata_provider2" {
+  template = file("${path.module}/userdata.tpl")
+  vars = {
+    server_name = "provider2"
+  }
+}
+
+resource "aws_instance" "provider2" {
+  instance_type           = "t3.micro"
+  ami                     = data.aws_ami.amazon-linux-2.id
+  key_name                = aws_key_pair.keypair.id
+  subnet_id               = var.subprv2_id
+  vpc_security_group_ids  = [var.sgprv1_id]
+  user_data               = data.template_file.userdata_provider2.*.rendered[0]
+  tags = { 
+    Name = format("%s_provider2", var.project_name)
+    project_name = var.project_name
+  }
+}
 
 #--- Server Consumer 1
-data "template_file" "userdata2" {
+data "template_file" "userdata_consumer" {
   template = file("${path.module}/userdata.tpl")
   vars = {
     server_name = "consumer"
@@ -49,7 +69,7 @@ resource "aws_instance" "consumer" {
   key_name                = aws_key_pair.keypair.id
   subnet_id               = var.subpub1_id
   vpc_security_group_ids  = [var.sgpub1_id]
-  user_data               = data.template_file.userdata2.*.rendered[0]
+  user_data               = data.template_file.userdata_consumer.*.rendered[0]
   tags = { 
     Name = format("%s_consumer", var.project_name)
     project_name = var.project_name
@@ -105,10 +125,16 @@ resource "aws_lb_target_group" "nlbtrggroup" {
   }
 }
 
-resource "aws_lb_target_group_attachment" "nlbtrggroupatt" {
+resource "aws_lb_target_group_attachment" "nlbtrggroupatt1" {
   target_group_arn  = aws_lb_target_group.nlbtrggroup.arn
   port              = 80
-  target_id         = aws_instance.provider.id
+  target_id         = aws_instance.provider1.id
+}
+
+resource "aws_lb_target_group_attachment" "nlbtrggroupatt2" {
+  target_group_arn  = aws_lb_target_group.nlbtrggroup.arn
+  port              = 80
+  target_id         = aws_instance.provider2.id
 }
 
 #--- VPC Endpoint Service in Provider VPC

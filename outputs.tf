@@ -45,11 +45,11 @@ output "rtpub1assoc_id" {
 output "keypair_id" {
   value = module.compute.keypair_id
 }
-output "provider_ids" {
-  value = module.compute.provider_ids
+output "provider1_ids" {
+  value = module.compute.provider1_ids
 }
-output "provider_public_ips" {
-  value = module.compute.provider_public_ips
+output "provider2_ids" {
+  value = module.compute.provider2_ids
 }
 output "consumer_ids" {
   value = module.compute.consumer_ids
