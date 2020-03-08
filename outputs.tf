@@ -39,18 +39,26 @@ output "rtpub1assoc_id" {
 }
 
 #--- compute
-# output "keypair_id" {
-#   value = module.compute.keypair_id
-# }
-# output "server1_ids" {
-#   value = module.compute.server1_ids
-# }
-# output "server1_public_ips" {
-#   value = module.compute.server1_public_ips
-# }
-# output "server2_ids" {
-#   value = module.compute.server2_ids
-# }
-# output "server2_public_ips" {
-#   value = module.compute.server2_public_ips
-# }
+output "keypair_id" {
+  value = module.compute.keypair_id
+}
+output "server1_ids" {
+  value = module.compute.server1_ids
+}
+output "server1_public_ips" {
+  value = module.compute.server1_public_ips
+}
+output "server2_ids" {
+  value = module.compute.server2_ids
+}
+output "server2_public_ips" {
+  value = module.compute.server2_public_ips
+}
+
+#--- VPC Endpoint Service
+output "vpce_id" {
+  value = module.compute.vpce_id
+}
+output "vpce_dns_names" {
+  value = module.compute.vpce_dns_names
+}

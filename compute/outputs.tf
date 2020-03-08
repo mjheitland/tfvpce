@@ -14,3 +14,11 @@ output "server2_ids" {
 output "server2_public_ips" {
   value = "${join(", ", aws_instance.server2.*.public_ip)}"
 }
+
+#--- VPC Endpoint Service
+output "vpce_id" {
+  value = aws_vpc_endpoint_service.vpce.id
+}
+output "vpce_dns_names" {
+  value = aws_vpc_endpoint_service.vpce.base_endpoint_dns_names
+}

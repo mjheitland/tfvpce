@@ -110,3 +110,19 @@ resource "aws_lb_target_group_attachment" "nlbtrggroupatt" {
   port              = 80
   target_id         = aws_instance.server1.id
 }
+
+#--- VPC Endpoint Service in Provider VPC
+
+resource "aws_vpc_endpoint_service" "vpce" {
+  acceptance_required        = false
+  network_load_balancer_arns = [aws_lb.nlb.arn]
+  tags = { 
+    Name = format("%s_vpce", var.project_name)
+    project_name = var.project_name
+  }
+}
+
+#-- VPC Endpoint Interface in Consumer VPC
+
+
+
