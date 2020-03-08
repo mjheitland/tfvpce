@@ -25,4 +25,4 @@ This Terraform project shows how to specify and deploy the following components:
     rm -rfv **/.terraform # remove all recursive subdirectories
     
 ![Alt text](https://./VPC Endpoint Service.svg?sanitize=true)
-<img src="https://./VPC Endpoint Service.svg?sanitize=true">
+<img src="https://./VPC%20Endpoint%20Service.svg?sanitize=true">
