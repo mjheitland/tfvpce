@@ -2,17 +2,17 @@
 output "keypair_id" {
   value = "${join(", ", aws_key_pair.keypair.*.id)}"
 }
-output "server1_ids" {
-  value = "${join(", ", aws_instance.server1.*.id)}"
+output "provider_ids" {
+  value = "${join(", ", aws_instance.provider.*.id)}"
 }
-output "server1_public_ips" {
-  value = "${join(", ", aws_instance.server1.*.public_ip)}"
+output "provider_public_ips" {
+  value = "${join(", ", aws_instance.provider.*.public_ip)}"
 }
-output "server2_ids" {
-  value = "${join(", ", aws_instance.server2.*.id)}"
+output "consumer_ids" {
+  value = "${join(", ", aws_instance.consumer.*.id)}"
 }
-output "server2_public_ips" {
-  value = "${join(", ", aws_instance.server2.*.public_ip)}"
+output "consumer_public_ips" {
+  value = "${join(", ", aws_instance.consumer.*.public_ip)}"
 }
 
 #--- VPC Endpoint Service
@@ -21,4 +21,10 @@ output "vpce_id" {
 }
 output "vpce_dns_names" {
   value = aws_vpc_endpoint_service.vpce.base_endpoint_dns_names
+}
+output "vpcept_id" {
+  value = aws_vpc_endpoint.vpcept.id
+}
+output "vpcept_dns_entry" {
+  value = aws_vpc_endpoint.vpcept.dns_entry
 }

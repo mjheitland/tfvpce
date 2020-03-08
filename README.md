@@ -2,8 +2,19 @@
 
 This Terraform project shows how to specify and deploy the following components:
 + 1 keypair (run ssh-keygen in your home folder to create a key "~/.ssh/tfvpce/id_rsa.pub")
-+ 1 service provider VPC with 1 ec2
-+ 1 service consumer VPC with 1 ec2
++ 1 service provider in a private VPC (no internet conenction):
+    - ec2 "provider" running a web server that returns "provider"
+    - network load balancer
+    - VPC endpoint service (uses internally a private VPC link)
++ 1 service consumer in a public VPC (with internet connection via internet gateway)
+    - internet gateway
+    - ec2 "consumer" that returns "consumer"
+    - VPC endpoint (generates automatically an ENI with a private ip address)
+
+To test that we can now connect from public VPC (consumer) to the private VPC (provider):
+1. log into consuemr (ssh or through AWS Console "EC2 Instance Connect (browser-based SSH connection)")
+2. curl &lt;DNS name of VPC endpoint &gt; (take it from the output variable "vpcept_dns_entry")
+3. curl should return "Server name: provider" (i.e. the web server response of ec2 "provider" sitting in the private VPC)
 
 ## Generate a keypair to access EC2 instances
 
@@ -18,7 +29,7 @@ This Terraform project shows how to specify and deploy the following components:
     terraform plan -out=tfplan
     
     terraform apply -auto-approve tfplan
-    
+    or
     terraform apply -auto-approve
     
     terraform destroy -auto-approve

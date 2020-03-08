@@ -18,11 +18,11 @@ data "aws_ami" "amazon-linux-2" {
 data "template_file" "userdata1" {
   template = file("${path.module}/userdata.tpl")
   vars = {
-    server_number = "1"
+    server_name = "provider"
   }
 }
 
-resource "aws_instance" "server1" {
+resource "aws_instance" "provider" {
   instance_type           = "t3.micro"
   ami                     = data.aws_ami.amazon-linux-2.id
   key_name                = aws_key_pair.keypair.id
@@ -30,7 +30,7 @@ resource "aws_instance" "server1" {
   vpc_security_group_ids  = [var.sgprv1_id]
   user_data               = data.template_file.userdata1.*.rendered[0]
   tags = { 
-    Name = format("%s_server1", var.project_name)
+    Name = format("%s_provider", var.project_name)
     project_name = var.project_name
   }
 }
@@ -40,10 +40,10 @@ resource "aws_instance" "server1" {
 data "template_file" "userdata2" {
   template = file("${path.module}/userdata.tpl")
   vars = {
-    server_number = "2"
+    server_name = "consumer"
   }
 }
-resource "aws_instance" "server2" {
+resource "aws_instance" "consumer" {
   instance_type           = "t3.micro"
   ami                     = data.aws_ami.amazon-linux-2.id
   key_name                = aws_key_pair.keypair.id
@@ -51,7 +51,7 @@ resource "aws_instance" "server2" {
   vpc_security_group_ids  = [var.sgpub1_id]
   user_data               = data.template_file.userdata2.*.rendered[0]
   tags = { 
-    Name = format("%s_server2", var.project_name)
+    Name = format("%s_consumer", var.project_name)
     project_name = var.project_name
   }
 }
@@ -108,7 +108,7 @@ resource "aws_lb_target_group" "nlbtrggroup" {
 resource "aws_lb_target_group_attachment" "nlbtrggroupatt" {
   target_group_arn  = aws_lb_target_group.nlbtrggroup.arn
   port              = 80
-  target_id         = aws_instance.server1.id
+  target_id         = aws_instance.provider.id
 }
 
 #--- VPC Endpoint Service in Provider VPC
@@ -124,5 +124,15 @@ resource "aws_vpc_endpoint_service" "vpce" {
 
 #-- VPC Endpoint Interface in Consumer VPC
 
-
-
+resource "aws_vpc_endpoint" "vpcept" {
+  vpc_id            = var.vpc2_id
+  service_name      = aws_vpc_endpoint_service.vpce.service_name
+  vpc_endpoint_type = "Interface"
+  security_group_ids = [var.sgpub1_id]
+  subnet_ids          = [var.subpub1_id]
+  private_dns_enabled = false
+  tags = { 
+    Name = format("%s_vpcept", var.project_name)
+    project_name = var.project_name
+  }
+}

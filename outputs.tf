@@ -42,17 +42,17 @@ output "rtpub1assoc_id" {
 output "keypair_id" {
   value = module.compute.keypair_id
 }
-output "server1_ids" {
-  value = module.compute.server1_ids
+output "provider_ids" {
+  value = module.compute.provider_ids
 }
-output "server1_public_ips" {
-  value = module.compute.server1_public_ips
+output "provider_public_ips" {
+  value = module.compute.provider_public_ips
 }
-output "server2_ids" {
-  value = module.compute.server2_ids
+output "consumer_ids" {
+  value = module.compute.consumer_ids
 }
-output "server2_public_ips" {
-  value = module.compute.server2_public_ips
+output "consumer_public_ips" {
+  value = module.compute.consumer_public_ips
 }
 
 #--- VPC Endpoint Service
@@ -61,4 +61,7 @@ output "vpce_id" {
 }
 output "vpce_dns_names" {
   value = module.compute.vpce_dns_names
+}
+output "vpcept_dns_entry" {
+  value = module.compute.vpcept_dns_entry
 }
