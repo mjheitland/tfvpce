@@ -10,6 +10,9 @@ output "vpc1_id" {
 output "subprv1_id" {
   value = module.networking.subprv1_id
 }
+output "subprv2_id" {
+  value = module.networking.subprv2_id
+}
 output "sgprv1_id" {
   value = module.networking.sgprv1_id
 }

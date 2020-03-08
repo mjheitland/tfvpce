@@ -16,7 +16,11 @@ variable "vpc1_id" {
   type        = string
 }
 variable "subprv1_id" {
-  description = "id of public subnets"
+  description = "id of private subnet 1"
+  type        = string
+}
+variable "subprv2_id" {
+  description = "id of private subnet 2"
   type        = string
 }
 variable "sgprv1_id" {

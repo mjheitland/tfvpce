@@ -20,6 +20,7 @@ module "compute" {
 
   vpc1_id         = module.networking.vpc1_id
   subprv1_id      = module.networking.subprv1_id
+  subprv2_id      = module.networking.subprv2_id
   sgprv1_id       = module.networking.sgprv1_id
   
   vpc2_id         = module.networking.vpc2_id

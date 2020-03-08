@@ -14,7 +14,7 @@ data "aws_ami" "amazon-linux-2" {
   }
 }  
 
-#--- Server 1
+#--- Server Provider 1
 data "template_file" "userdata1" {
   template = file("${path.module}/userdata.tpl")
   vars = {
@@ -36,7 +36,7 @@ resource "aws_instance" "provider" {
 }
 
 
-#--- Server 2
+#--- Server Consumer 1
 data "template_file" "userdata2" {
   template = file("${path.module}/userdata.tpl")
   vars = {
@@ -62,7 +62,7 @@ resource "aws_lb" "nlb" {
   name               = "nlb"
   load_balancer_type = "network"
   internal           = true
-  subnets            = [var.subprv1_id]
+  subnets            = [var.subprv1_id, var.subprv2_id]
 # enable_deletion_protection = true
   tags = { 
     Name = format("%s_nlb", var.project_name)

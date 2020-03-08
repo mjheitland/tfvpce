@@ -5,6 +5,9 @@ output "vpc1_id" {
 output "subprv1_id" {
   value = aws_subnet.subprv1.*.id[0]
 }
+output "subprv2_id" {
+  value = aws_subnet.subprv2.*.id[0]
+}
 output "sgprv1_id" {
   value = aws_security_group.sgprv1.id
 }

@@ -19,7 +19,7 @@ resource "aws_vpc" "vpc1" {
 resource "aws_subnet" "subprv1" {
   vpc_id                  = aws_vpc.vpc1.id
   cidr_block              = "10.1.1.0/24"
-  map_public_ip_on_launch = true
+  map_public_ip_on_launch = false
   availability_zone       = data.aws_availability_zones.available.names[0]
   
   tags = { 
@@ -28,8 +28,19 @@ resource "aws_subnet" "subprv1" {
   }
 }
 
-# Public route table, allows all outgoing traffic to go the the internet gateway.
-# https://www.terraform.io/docs/providers/aws/r/route_table.html?source=post_page-----1a7fb9a336e9----------------------
+resource "aws_subnet" "subprv2" {
+  vpc_id                  = aws_vpc.vpc1.id
+  cidr_block              = "10.1.2.0/24"
+  map_public_ip_on_launch = false
+  availability_zone       = data.aws_availability_zones.available.names[1]
+  
+  tags = { 
+    Name = format("%s_subprv2", var.project_name)
+    project_name = var.project_name
+  }
+}
+
+# Private route table, allows only local traffic within VPC1
 resource "aws_route_table" "rtprv1" {
   vpc_id = aws_vpc.vpc1.id
   tags = {
