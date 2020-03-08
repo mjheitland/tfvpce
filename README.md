@@ -32,4 +32,5 @@ This Terraform project shows how to specify and deploy the following components:
 
 ## Links
 <a href="https://docs.aws.amazon.com/vpc/latest/userguide/endpoint-service.html">VPC Endpoint Services (Private Link)</a>
+<br>
 <a href="https://cloudaffaire.com/create-a-vpc-endpoint-service/">Create a VPC Endpoint Service</a>
