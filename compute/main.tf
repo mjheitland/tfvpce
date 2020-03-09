@@ -35,7 +35,7 @@ resource "aws_instance" "provider1" {
   }
 }
 
-#--- Server Provider 1
+#--- Server Provider 2
 data "template_file" "userdata_provider2" {
   template = file("${path.module}/userdata.tpl")
   vars = {
@@ -77,7 +77,6 @@ resource "aws_instance" "consumer" {
 }
 
 #--- Network Load Balancer
-
 resource "aws_lb" "nlb" {
   name               = "nlb"
   load_balancer_type = "network"
@@ -138,7 +137,6 @@ resource "aws_lb_target_group_attachment" "nlbtrggroupatt2" {
 }
 
 #--- VPC Endpoint Service in Provider VPC
-
 resource "aws_vpc_endpoint_service" "vpce" {
   acceptance_required        = false
   network_load_balancer_arns = [aws_lb.nlb.arn]
@@ -149,7 +147,6 @@ resource "aws_vpc_endpoint_service" "vpce" {
 }
 
 #-- VPC Endpoint Interface in Consumer VPC
-
 resource "aws_vpc_endpoint" "vpcept" {
   vpc_id            = var.vpc2_id
   service_name      = aws_vpc_endpoint_service.vpce.service_name
