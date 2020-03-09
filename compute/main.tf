@@ -82,6 +82,7 @@ resource "aws_lb" "nlb" {
   load_balancer_type = "network"
   internal           = true
   subnets            = [var.subprv1_id, var.subprv2_id]
+  enable_cross_zone_load_balancing = true
 # enable_deletion_protection = true
   tags = { 
     Name = format("%s_nlb", var.project_name)
