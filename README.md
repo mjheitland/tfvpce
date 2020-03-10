@@ -5,7 +5,7 @@ This Terraform project shows how to specify and deploy the following components:
 + 2 service providers in a private VPC (no internet conenction):
     - ec2 "provider1" running a web server that returns "provider1" in one subnet and AZ
     - ec2 "provider2" running a web server that returns "provider2" in another subnet and AZ
-    - network load balancer
+    - cross-zone network load balancer
     - VPC endpoint service (uses internally a private VPC link)
 + 1 service consumer in a public VPC (with internet connection via internet gateway)
     - internet gateway
@@ -13,9 +13,9 @@ This Terraform project shows how to specify and deploy the following components:
     - VPC endpoint (generates automatically an ENI with a private ip address)
 
 To test that we can now connect from public VPC (consumer) to the private VPC (provider):
-1. log into consuemr (ssh or through AWS Console "EC2 Instance Connect (browser-based SSH connection)")
+1. log into consumer (ssh or through AWS Console "EC2 Instance Connect = browser-based SSH connection")
 2. curl &lt;DNS name of VPC endpoint &gt; (take it from the output variable "vpcept_dns_entry")
-3. curl should return "Server name: provider1" or "Server name: provider2" (i.e. the web server response of ec2 "provider" sitting in the private VPC)
+3. curl should return "Server name: provider1" or "Server name: provider2" (i.e. the web server response of ec2 "provider1" or "provider2" sitting in the private VPC)
 
 ## Generate a keypair to access EC2 instances
 
